@@ -1,0 +1,211 @@
+swagger: "2.0"
+host: localhost:8080
+basePath: /reserva
+schemes:
+  - http
+  - https
+produces:
+  - application/json
+info: 
+  contact:
+    name: Alejandro Aljarilla
+    email: alexaljarilla@gmail.com
+    url: https://www.grupo1.com  
+  version: 2.0.0
+  title: AulaInformatica
+  description: API para las reservas de los ordenadores/tablets
+  
+paths:
+  /visualizacionReservas:
+    get:
+      operationId: visualizacionReservas
+      description: Visualiza todas las reservas de aulas y carros
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: Las aulas y carros reservados
+        400: 
+          description: La visualizacion no fue correctamente
+          schema: 
+            $ref: '#/definitions/AulaError'
+        500:
+          description: server error
+          schema:
+            $ref: '#/definitions/AulaError'              
+  /seleccionAulas:
+    post:
+      operationId: seleccionAulas
+      description: Elegimos la aula que se quiere reservar
+      parameters:
+      - name: idProfesor
+        description: Identificador del profesor
+        in: query
+        type: integer
+      - name: idAula
+        description: Identificador del aula
+        in: query
+        type: integer
+      - name: fecha
+        description: Fecha de la reserva
+        in: query
+        type: integer
+        format: int64
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: Si todo ha ido bien es que ha sido posible la reserva del aula
+        400: 
+          description: Reserva del aula no fue posible
+          schema: 
+            $ref: '#/definitions/AulaError'
+        500:
+          description: server error
+          schema: 
+            $ref: '#/definitions/AulaError'
+  /seleccionTablets:
+    post:
+      operationId: seleccionTablets
+      description: Elegimos el carrito de las tablets que se quiere reservar
+      parameters:
+      - name: idProfesor
+        description: Identificador del profesor
+        in: query
+        type: integer
+      - name: idCarritoTablets
+        description: Identificador del carrito de las tablets
+        in: query
+        type: integer
+      - name: fecha
+        description: Fecha de la reserva
+        in: query
+        type: integer
+        format: int64
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: Si todo ha ido bien es que ha sido posible la reserva del carrito de tablets
+        400: 
+          description: Reserva del carrito de tablets no fue posible
+          schema: 
+            $ref: '#/definitions/AulaError'
+        500:
+          description: server error
+          schema: 
+            $ref: '#/definitions/AulaError'
+  /seleccionPCs:
+    post:
+      operationId: seleccionPCs
+      description: Elegimos el carrito de los PCs que se quiere reservar
+      parameters:
+      - name: idProfesor
+        description: Identificador del profesor
+        in: query
+        type: integer
+      - name: idCarritosPcs
+        description: Identificador del carrito de Pcs
+        in: query
+        type: integer
+      - name: fecha
+        description: Fecha de la reserva
+        in: query
+        type: integer
+        format: int64
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: Si todo ha ido bien es que ha sido posible la reserva del carrito de PCs
+        400: 
+          description: Reserva del carrito de PCs no fue posible
+          schema: 
+            $ref: '#/definitions/AulaError'
+        500:
+          description: server error
+          schema: 
+            $ref: '#/definitions/AulaError'
+  /confirmacionReserva:
+    post:
+      operationId: confirmacionReserva
+      description: Confirmamos las reservas hechas
+      parameters:
+        - name: confirmacion
+          description: Confirmacion de la reserva
+          in: query
+          type: string
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: Si todo ha ido bien es que ha sido posible realizar la reserva
+        400: 
+          description: La reserva no fue realizada
+          schema: 
+            $ref: '#/definitions/AulaError'
+        500:
+          description: server error
+          schema: 
+            $ref: '#/definitions/AulaError'
+definitions:
+  Profesor:
+    type: object
+    properties:
+      id:
+       type: integer
+       description: id del profesor
+      nombre:
+        type: string
+        description: nombre del profesor
+      apellidos:
+        type: string
+        description: apellidos del profesor
+  Aula:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: id del aula
+      numeroAula:
+        type: string
+        description: numero del aula
+      planta:
+        type: string
+        description: planta del aula
+  CarritoPcs:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: id del carrito de pcs
+      numeroPcs:
+        type: integer
+        description: numero de pcs
+      planta:
+        type: string
+        description: planta del carrito de pcs
+      sistemaOperativo:
+        type: string
+        description: sistemaOperativo de los Pcs
+  CarritoTablets:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: id del carrito de tablets
+      numeroTablets:
+        type: integer
+        description: numero de tablets
+      planta:
+        type: string
+        description: planta del carrito de tablets
+  AulaError:
+    type: object
+    properties:
+      code:
+        type: string
+        description: codigo de error
+      message:
+        type: string
+        description: mensaje del error  

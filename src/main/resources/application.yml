@@ -1,0 +1,15 @@
+spring:
+  jpa.hibernate.ddl-auto: none
+  datasource:
+    url: jdbc:mysql://localhost:3306/reserva
+    username: root
+    password: root
+  hikari:
+    connection-timeout: 60000
+    maximun-pool-size: 5
+logging:
+  pattern.console: '%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n'
+  level.org.hibernate.SQL: debug
+  level: debug
+server:
+  port: 8082
